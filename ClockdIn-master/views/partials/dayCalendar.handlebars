@@ -1,0 +1,34 @@
+<div id="week-calendar">
+	<table>
+        <thead>
+            <tr>
+                <th class="table-name">Name</th>
+                {{#each data.dayHours}}
+				<th class = "table-day">
+					{{this}}
+				</th>
+				{{/each}}
+            </tr>
+        </thead>
+		<tbody>
+			{{#each data.rows}}
+            <tr>
+                <td>{{name}}</td>
+                {{#each hours}}
+                    {{#if this}}
+					<td class = "days-with-schedule">
+						{{#compare this "===" "middle"}}
+                        {{else}}
+                            {{this}}
+                        {{/compare}}
+					</td>
+                    {{else}}
+                    <td></td>
+                    {{/if}}
+                {{/each}}
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

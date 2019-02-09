@@ -1,0 +1,205 @@
+{{> navbar}}
+<div class="row">
+	<!-- This needs to be loaded in dynamically as well -->
+    {{> nameWidget data=data.userInfo}}
+	<!-- This is the dynamically loaded calendar.  It shows all shifts for all employees -->
+	<!-- I may want to add id's somewhere in here -->
+    <div class="col s9 col-2 emp-month-card">
+        <div class="col s12">
+            <div class="card gradient-blue-bg calendar-card">
+                <div class="color-bar"></div>
+                <div class="sched-header">
+                    <p>Scheduler</p>
+                    <div class="week-month-wrapper">
+                    {{#compare data.head.type "===" "week"}}
+                        <div class="week-btn week-day-selected">Week</div>
+                        <div class="separator"></div>
+                        <div class="day-btn">Day</div>
+                    {{else}}
+                        <div class="week-btn">Week</div>
+                        <div class="separator"></div>
+                        <div class="day-btn  week-day-selected">Day</div>
+                    {{/compare}}
+                    </div>
+                </div>
+                <div class="row month-row">
+                    <div class="col s4 arrows left-arrow">
+                    	<i id="backArrow" data-type="{{data.head.type}}" data-value="{{data.head.back}}" class="arrowBtn sm-md material-icons float-right">chevron_left</i>
+                    </div>
+                    <div class="col s4 month-display">{{data.head.middle}}</div>
+                    <div class="col s4 arrows right-arrow">
+                    	<i id="forwardArrow" data-type="{{data.head.type}}" data-value="{{data.head.forward}}" class="arrowBtn sm-md material-icons float-left">chevron_right</i>
+                    </div>
+                </div>
+                <div id="calendar-container">
+                {{#compare data.head.type "===" "week"}}
+                    {{> weekCalendar data=data}}
+                {{else}}
+                	{{#compare data.head.type "===" "day"}}
+                		{{> dayCalendar data=data}}
+                	{{/compare}}
+                {{/compare}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	
+
+<div id="addShift" class="modal modal-fixed-footer">
+    <div class="modal-content">
+		<select id = "shiftName">
+			{{#each data.employees}}
+  			<option value="{{id}}">{{name}}</option>
+  			{{/each}}
+		</select>
+
+		<input id="shiftStart" type="time" class="validate">
+        <label for="shiftStart">Start Time</label>
+
+        <input id="shiftEnd" type="time" class="validate">
+        <label for="shiftEnd">End Time</label>
+
+        <input id="shiftDate" type="date" class="validate">
+        <label for="shiftDate">Date</label>
+
+        <input id="shiftPosition" type="text" class="validate">
+        <label for="shiftPosition">Position</label>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+        <p id="shiftSubmit" class="modal-action modal-close waves-effect waves-green btn-flat ">Submit</p>
+    </div>
+</div>
+
+<div id="addEmployee" class="modal modal-fixed-footer">
+    <div class="modal-content">
+		<input id="empName" type="text" class="validate">
+        <label for="empName">Employee Name</label>
+
+        <input id="empDob" type="date" class="validate">
+        <label for="empDob">Date of Birth</label>
+		<br>
+        <input id="empManager" type="checkbox" class="validate">
+        <label for="empManager">Give Manager Permissions</label>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+        <p id= "empSubmit" class="modal-action modal-close waves-effect waves-green btn-flat"> Submit </p>
+    </div>
+</div>
+
+<div id="alert" class="modal modal-fixed-footer">
+    <div class="modal-content">
+		
+    </div>
+    <div class="modal-footer">
+        <p id= "alertClear" class="modal-action modal-close waves-effect waves-green btn-flat"> OK </p>
+    </div>
+</div>
+
+<div id="setAvailability" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h4>Sunday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="sundayStart" type="time" class="validate">
+                <label for="sundayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="sundayEnd" type="time" class="validate">
+                <label for="sundayEnd">End</label>
+            </div>
+        </div>
+        <h4>Monday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="mondayStart" type="time" class="validate">
+                <label for="mondayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="mondayEnd" type="time" class="validate">
+                <label for="mondayEnd">End</label>
+            </div>
+        </div>
+        <h4>Tuesday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="tuesdayStart" type="time" class="validate">
+                <label for="tuesdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="tuesdayEnd" type="time" class="validate">
+                <label for="tuesdayEnd">End</label>
+            </div>
+        </div>
+        <h4>Wednesday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="wednesdayStart" type="time" class="validate">
+                <label for="wednesdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="wednesdayEnd" type="time" class="validate">
+                <label for="wednesdayEnd">End</label>
+            </div>
+        </div>
+        <h4>Thursday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="thursdayStart" type="time" class="validate">
+                <label for="thursdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="thursdayEnd" type="time" class="validate">
+                <label for="thursdayEnd">End</label>
+            </div>
+        </div>
+        <h4>Friday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="fridayStart" type="time" class="validate">
+                <label for="fridayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="fridayEnd" type="time" class="validate">
+                <label for="fridayEnd">End</label>
+            </div>
+        </div>
+        <h4>Saturday</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="saturdayStart" type="time" class="validate">
+                <label for="saturdayStart">Start</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="saturdayEnd" type="time" class="validate">
+                <label for="saturdayEnd">End</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <p id= "submitAvailability" data-value = "{{data.userInfo.id}}" class="modal-action modal-close waves-effect waves-green btn-flat"> Save </p>
+    </div>
+</div>
+
+<div id="override" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <p>The shift you are trying to add is outside of the Employee's availabilty:</p>
+        <div class = "col s6">
+            <p>Start:</p>
+            <p id = "availStart"></p>
+        </div>
+        <div class = "col s6">
+            <p>End:</p>
+            <p id = "availEnd"></p>
+        </div>
+        
+        <h2>Would you like to schedule this shift anyway?</h2>
+    </div>
+    <div class="modal-footer">
+        <p class="modal-action modal-close waves-effect waves-green btn-flat"> Close </p>
+        <p id="btnOverride" class="modal-action modal-close waves-effect waves-green btn-flat"> Override </p>
+    </div>
+</div>
