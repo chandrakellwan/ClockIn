@@ -1,7 +1,7 @@
-# ClockdIn
+# ScanIn
 
-ClockdIn is an Employee Management System that allows users to set schedules for part- and full-time employees.
-Still in its infancy, ClockdIn only has the ability to support a single location; in the future it will be expanded so that many schedules can be created for many different clients.
+ScanIn is an Employee Management System that allows users to set schedules for part- and full-time employees.
+Still in its infancy, ScanIn only has the ability to support a single location; in the future it will be expanded so that many schedules can be created for many different clients.
 
 # Features:  
   * Managers are able to create employees and add shifts.
